@@ -1,29 +1,39 @@
 <template>
-    <v-app class="inner-block-grande">
+    <section class="inner-block-grande">
         <h4>Productos en el Carrito</h4>
-        <v-data-table
-            :headers="headers"
-            :items="enCarro"
-            item-key="nombre"
-            :items-per-page="5"
-            class="elevation-1"
-        >
-        <template v-slot:[`item.accion`]="{ item }">
-            <v-icon
-                small
-                @click="eliminar(item)"
+        <v-container>
+            <v-data-table
+                :headers="headers"
+                :items="enCarro"
+                item-key="nombre"
+                :items-per-page="5"
+                class="elevation-1"
             >
-                mdi-delete
-            </v-icon>
-        </template>
-        </v-data-table>
-        <p v-if="enCarro.length==0">No agregaste nada al carro aun</p>
-        <article class="botonera">
-            <v-btn class="btn btn-dark">Comprar</v-btn>
-            <p>Total de la compra $ {{calcularTotal}}</p>
-            <v-btn class="btn btn-secondary">Regresar</v-btn>
-        </article>
-    </v-app>
+            <template v-slot:[`item.accion`]="{ item }">
+                <v-icon
+                    small
+                    @click="eliminar(item)"
+                >
+                    mdi-delete
+                </v-icon>
+            </template>
+            </v-data-table>
+            <p v-if="enCarro.length==0">No agregaste nada al carro aun</p>
+            <article class="botonera">
+                <v-btn 
+                    color='alert'
+                    class='mr-4'
+                    @click='comprar()'
+                >Comprar</v-btn>
+                <p>Total de la compra $ {{calcularTotal}}</p>
+                <v-btn 
+                    color='alert'
+                    class='mr-4'
+                    @click='regresar()'
+                >Regresar</v-btn>
+            </article>
+        </v-container>
+    </section>
 </template>
 
 <script>
@@ -42,6 +52,7 @@
                     },
                     { text: 'Marca', value: 'marca' },
                     { text: 'Precio', value: 'precio' },
+                    { text: 'Cantidad', value: 'cantidad' },
                     { text: 'Acción', value: 'accion',sortable:false}
                     ],
                 totalCompra:0
@@ -57,13 +68,19 @@
                 console.log("Lo que quedo en carro:")
                 console.log(this.enCarro);
                 localStorage.setItem('carro',JSON.stringify(this.enCarro));
+            },
+            comprar(){
+                console.log("A formulario de compra")
+            },
+            regresar(){
+                this.$router.push('/products');
             }
         },
         computed:{
             calcularTotal(){
                 let total=0;
                 for (const prod of this.enCarro){
-                    total+=prod.precio;
+                    total+=(prod.precio * prod.cantidad);
                 }
                 return total;
             }

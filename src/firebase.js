@@ -21,7 +21,9 @@ console.log(app)
 const db = getFirestore(app);
 // const auth = getAuth();
 const usuarios= collection(db,'users');
+// const productos= collection(db,'products');
 const q=query(collection(db,'users'));
+const qProds=query(collection(db,'products'));
 
 
 export async function getUsers(){
@@ -30,13 +32,23 @@ export async function getUsers(){
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
-        if(doc.data().usuario!=undefined){
-            listaUsus.push(doc.data().usuario);
-        }
+        // if(doc.data().usuario!=undefined){
+        //     listaUsus.push(doc.data().usuario);
+        // }
+        listaUsus.push(doc.data().usuario);
     });
     return listaUsus;
 }
 
 export async function postUser(usuario){
     await setDoc(doc(usuarios), {usuario});
+}
+
+export async function getProducts(){
+    const querySnapshot = await getDocs(qProds);
+    const listaProds=[];
+    querySnapshot.forEach((doc) => {
+        listaProds.push(doc.data());
+    });
+    return listaProds;
 }

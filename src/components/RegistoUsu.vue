@@ -1,9 +1,9 @@
 <template>
     <div>
-    <div v-show="!usuarioLoggeado">
+    <div v-show="usuarioActivo!='Anonimo'">
         <p>No puedes registrarte, ya hay un usuario autenticado</p>
     </div>
-    <div v-show="usuarioLoggeado">
+    <div v-show="usuarioActivo=='Anonimo'">
         <validation-observer
             ref="observer"
             v-slot="{ invalid }"
@@ -92,6 +92,7 @@
     import { required, email, max, min } from 'vee-validate/dist/rules'
     import {extend, ValidationProvider, ValidationObserver} from 'vee-validate'
     import {postUser} from '../firebase'
+    import {mapState} from 'vuex'
     
     extend('required', {
         ...required,
@@ -117,7 +118,6 @@
         name:'RegUsu',
         data() {
             return {
-                usuarioLoggeado:JSON.parse(localStorage.getItem('logged'))==null,
                 nombre:'',
                 apellido:'',
                 email:'',
@@ -146,6 +146,11 @@
                 console.log(nuevoUsu);
                 postUser(nuevoUsu)
             }
+        },
+        computed:{
+            ...mapState([
+                'usuarioActivo'
+            ])
         }
     }
 </script>

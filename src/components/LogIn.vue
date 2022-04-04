@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-show="usuarioActivo=='Anonimo'">
         <validation-observer
             ref="observer"
             v-slot="{ invalid }"
@@ -78,7 +78,7 @@
         message: '{_field_} no deber ser menor de {length} caracteres',
     })
 
-    import {mapMutations} from 'vuex'
+    import {mapMutations, mapState} from 'vuex'
 
     export default {
         name:'LogIn',
@@ -95,6 +95,7 @@
             }
         },
         async created(){
+            //solicito la lista de usuarios a firebase
             this.listaUsu=await getUsers();
             console.log(this.listaUsu);
         },
@@ -108,8 +109,9 @@
                 this.$refs.observer.validate()
             },
             validar(){
-                console.table(this.listaUsu);
+                console.log(this.listaUsu);
                 this.encontrado=this.listaUsu.find(usuario => usuario.email==this.usu && usuario.password==this.pass);
+                console.log(this.encontrado)
                 if(this.encontrado){
                     console.log("Usuario autenticado con exito");
                     localStorage.setItem("logged",JSON.stringify(this.encontrado));
@@ -118,6 +120,11 @@
                 }
 
             }
+        },
+        computed:{
+            ...mapState([
+                'usuarioActivo'
+            ])
         }
     }
 </script>

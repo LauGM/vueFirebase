@@ -20,18 +20,18 @@
                     </template>
 
                     <v-img
-                        height="300"
+                        height="180"
                         :src="item.imagen"
                     ></v-img>
 
-                    <v-card-title>{{item.marca}}</v-card-title>
+                    <v-card-title>{{item.nombre}}</v-card-title>
 
                     <v-card-text>
                         <div class="my-4 text-subtitle-1">
-                            Modelo: {{item.nombre}}
+                            Marca: {{item.marca}}
                         </div>
                         <div class="my-4 text-subtitle-2">
-                            $ {{item.precio | filtroDecimal}}
+                            Precio:$ {{item.precio | filtroDecimal}}
                         </div>
                     </v-card-text>
 
@@ -60,7 +60,8 @@
 <script>
     //el siguiente json local en caso de superar las solicitudes diarias de mockaroo
     //import stock from '../data/productos.json'
-    import axios from 'axios'
+    // import axios from 'axios'
+    import {getProducts} from '../firebase'
     export default ({
         name:'CarritoCompras',
         data(){
@@ -71,24 +72,27 @@
             }
         },
         async created(){
-            const URL="https://my.api.mockaroo.com/products.json?key=140b4040";
-            await axios.get(URL)
-            .then((response) => (this.listaStock=response.data))
-            .catch(function (err) {
-                console.error(err);
-            })
+            // const URL="https://my.api.mockaroo.com/products.json?key=140b4040";
+            // await axios.get(URL)
+            // .then((response) => (this.listaStock=response.data))
+            // .catch(function (err) {
+            //     console.error(err);
+            // })
+            //solicito la lista de productos a firebase
+            this.listaStock=await getProducts();
+            console.log(this.listaStock);
+
         },
-        // beforeMount(){
-        //     if(this.listaStock.length==0){
-        //         console.log("Utilizando el archivo local")
-        //         console.log(stock)
-        //         this.listaStock=stock;
-        //         console.log("Stock local cargado:");
-        //     }
-        // },
         methods:{
             agregar(item){
-                this.agregados.push(item);
+                const repetido=this.agregados.findIndex(elemento => elemento.id ==item.id);
+                console.log(repetido)
+                if(repetido!=-1){
+                    this.agregados[repetido].cantidad++;
+                }else{
+                    item.cantidad=1;
+                    this.agregados.push(item);
+                }
                 console.table(this.agregados);
                 localStorage.setItem("carro",JSON.stringify(this.agregados));
             }
