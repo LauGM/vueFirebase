@@ -25,7 +25,7 @@
                     class='mr-4'
                     @click='comprar()'
                 >Comprar</v-btn>
-                <p>Total de la compra $ {{calcularTotal}}</p>
+                <p>Total de la compra $ {{calcularTotal | filtroDecimal}}</p>
                 <v-btn 
                     color='alert'
                     class='mr-4'

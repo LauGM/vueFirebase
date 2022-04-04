@@ -103,7 +103,8 @@
         methods:{
               // en methods las mutaciones
             ...mapMutations([
-            'actualizarUsuario'
+            'actualizarUsuario',
+            'actualizarAdministrador'
             ]),
             submit () {
                 this.$refs.observer.validate()
@@ -116,6 +117,7 @@
                     console.log("Usuario autenticado con exito");
                     localStorage.setItem("logged",JSON.stringify(this.encontrado));
                     this.actualizarUsuario(this.encontrado.nombre);
+                    this.actualizarAdministrador(this.encontrado.admin)
                     this.$router.push('/products');
                 }
 

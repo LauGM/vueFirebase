@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore,collection, query,getDocs,setDoc,doc} from 'firebase/firestore';
+import { getFirestore,collection, query,getDocs,setDoc,doc, updateDoc} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -35,6 +35,7 @@ export async function getUsers(){
         // if(doc.data().usuario!=undefined){
         //     listaUsus.push(doc.data().usuario);
         // }
+        console.log(doc.id);
         listaUsus.push(doc.data().usuario);
     });
     return listaUsus;
@@ -44,11 +45,17 @@ export async function postUser(usuario){
     await setDoc(doc(usuarios), {usuario});
 }
 
+export async function updateProd(id,prod){
+    await updateDoc(doc(db,'products',id),prod);
+}
+
 export async function getProducts(){
     const querySnapshot = await getDocs(qProds);
+    const listaIds=[];
     const listaProds=[];
     querySnapshot.forEach((doc) => {
+        listaIds.push(doc.id);
         listaProds.push(doc.data());
     });
-    return listaProds;
+    return [listaIds,listaProds];
 }

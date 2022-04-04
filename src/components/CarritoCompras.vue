@@ -31,7 +31,7 @@
                             Marca: {{item.marca}}
                         </div>
                         <div class="my-4 text-subtitle-2">
-                            Precio:$ {{item.precio | filtroDecimal}}
+                            Precio:$ {{item.precio}}
                         </div>
                     </v-card-text>
 
@@ -41,7 +41,7 @@
                 
                     </v-card-text>
 
-                    <v-card-actions>
+                    <v-card-actions class="botonera">
                     <v-btn
                         color="deep-purple lighten-2"
                         text
@@ -49,6 +49,18 @@
                     >
                         Comprar
                     </v-btn>
+                    <v-btn
+                            class="mx-2"
+                            fab
+                            dark
+                            x-small
+                            color="deep-purple"
+                            @click="redireccionar(item)"
+                            >
+                            <v-icon dark>
+                                mdi-plus
+                            </v-icon>
+                            </v-btn>
                     </v-card-actions>
                 </v-card>
                 </v-col>
@@ -61,6 +73,7 @@
     //el siguiente json local en caso de superar las solicitudes diarias de mockaroo
     //import stock from '../data/productos.json'
     // import axios from 'axios'
+    import{mapMutations} from 'vuex'
     import {getProducts} from '../firebase'
     export default ({
         name:'CarritoCompras',
@@ -72,18 +85,20 @@
             }
         },
         async created(){
-            // const URL="https://my.api.mockaroo.com/products.json?key=140b4040";
-            // await axios.get(URL)
-            // .then((response) => (this.listaStock=response.data))
-            // .catch(function (err) {
-            //     console.error(err);
-            // })
-            //solicito la lista de productos a firebase
-            this.listaStock=await getProducts();
+            //solicito el array de dos listas que devuelve getProducts:
+            const listaIdData=await getProducts();
+            //la lista de ids de firebase la guardo en el storage
+            sessionStorage.setItem('ids',JSON.stringify(listaIdData[0]));
+            //la lista de productos la guardo en listaStock local a este componente
+            this.listaStock=listaIdData[1];
             console.log(this.listaStock);
 
         },
         methods:{
+            // en methods las mutaciones
+            ...mapMutations([
+            'actualizarItemDetalle'
+            ]),
             agregar(item){
                 const repetido=this.agregados.findIndex(elemento => elemento.id ==item.id);
                 console.log(repetido)
@@ -95,6 +110,12 @@
                 }
                 console.table(this.agregados);
                 localStorage.setItem("carro",JSON.stringify(this.agregados));
+            },
+            redireccionar(item){
+                const posicion=this.listaStock.findIndex(producto =>producto.id==item.id);
+                sessionStorage.setItem('posicionProd',posicion);
+                this.actualizarItemDetalle(item);
+                this.$router.push('/info');
             }
         }
     })
