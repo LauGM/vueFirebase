@@ -79,7 +79,7 @@
         name:'CarritoCompras',
         data(){
             return{
-                agregados:JSON.parse(localStorage.getItem("carro"))||[],
+                agregados:JSON.parse(sessionStorage.getItem("carro"))||[],
                 listaStock:[],
                 loading:false
             }
@@ -109,7 +109,7 @@
                     this.agregados.push(item);
                 }
                 console.table(this.agregados);
-                localStorage.setItem("carro",JSON.stringify(this.agregados));
+                sessionStorage.setItem("carro",JSON.stringify(this.agregados));
             },
             redireccionar(item){
                 const posicion=this.listaStock.findIndex(producto =>producto.id==item.id);

@@ -1,26 +1,42 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> | |
+      <router-link to="/">Home</router-link> |
       <router-link to="/register">Register</router-link> |
       <router-link to="/products">Products</router-link> |
       <router-link to="/info">Info</router-link> |
       <router-link to="/cart">Cart</router-link> 
     </nav>
-    <p v-if="usuarioActivo != 'Anonimo'">Bienvenido/a {{usuarioActivo}}</p>
-    <p v-else>Aún no estás logueado/a</p>
+    <div class="botonera">
+      <p v-if="usuarioActivo != 'Anonimo'">Bienvenido/a {{usuarioActivo}}</p>
+      <p v-else>Aún no estás logueado/a</p>
+      <v-btn v-if="usuarioActivo != 'Anonimo'" @click="realizarLogout()">Logout</v-btn>
+    </div>
     <router-view/>
   </div>
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState,mapMutations} from 'vuex'
   export default {
     //en computed los estados
   computed:{
     ...mapState([
       'usuarioActivo'
     ])
+  },
+  methods:{
+     // en methods las mutaciones
+    ...mapMutations([
+    'actualizarUsuario',
+    'actualizarAdministrador'
+    ]),
+    realizarLogout(){
+      sessionStorage.clear();
+      this.actualizarUsuario("Anonimo");
+      this.actualizarAdministrador(false)
+      this.$router.push('/');
+    }
   }
 
 }

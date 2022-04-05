@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    usuarioActivo:JSON.parse(localStorage.getItem("logged"))?JSON.parse(localStorage.getItem("logged")).nombre:"Anonimo",
-    administrador:JSON.parse(localStorage.getItem("logged"))?JSON.parse(localStorage.getItem("logged")).admin:false,
+    usuarioActivo:JSON.parse(sessionStorage.getItem("logged"))?JSON.parse(sessionStorage.getItem("logged")).nombre:"Anonimo",
+    administrador:JSON.parse(sessionStorage.getItem("logged"))?JSON.parse(sessionStorage.getItem("logged")).admin:false,
     itemDetalle:{}
   },
   getters: {

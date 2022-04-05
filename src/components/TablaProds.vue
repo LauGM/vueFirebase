@@ -41,7 +41,7 @@
         name:'TablaProds',
         data(){
             return{
-                enCarro:JSON.parse(localStorage.getItem("carro"))||[],
+                enCarro:JSON.parse(sessionStorage.getItem("carro"))||[],
                 headers: [
                     { text: 'Id', value: 'id' },
                     {
@@ -67,7 +67,7 @@
                 this.enCarro.splice(index,1);
                 console.log("Lo que quedo en carro:")
                 console.log(this.enCarro);
-                localStorage.setItem('carro',JSON.stringify(this.enCarro));
+                sessionStorage.setItem('carro',JSON.stringify(this.enCarro));
             },
             comprar(){
                 console.log("A formulario de compra")

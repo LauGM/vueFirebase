@@ -115,7 +115,7 @@
                 console.log(this.encontrado)
                 if(this.encontrado){
                     console.log("Usuario autenticado con exito");
-                    localStorage.setItem("logged",JSON.stringify(this.encontrado));
+                    sessionStorage.setItem("logged",JSON.stringify(this.encontrado));
                     this.actualizarUsuario(this.encontrado.nombre);
                     this.actualizarAdministrador(this.encontrado.admin)
                     this.$router.push('/products');
