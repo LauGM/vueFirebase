@@ -42,11 +42,21 @@ export async function getUsers(){
 }
 
 export async function postUser(usuario){
-    await setDoc(doc(usuarios), {usuario});
+    try {
+        await setDoc(doc(usuarios), {usuario});
+        alert("Registro exitoso");
+    } catch (error) {
+        console.log("Error "+error);
+    }
 }
 
 export async function updateProd(id,prod){
-    await updateDoc(doc(db,'products',id),prod);
+    try {
+        await updateDoc(doc(db,'products',id),prod);
+        alert("Actualización realizada");       
+    } catch (error) {
+        console.log("Error "+error);
+    }
 }
 
 export async function getProducts(){
