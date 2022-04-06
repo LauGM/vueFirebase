@@ -2,71 +2,88 @@
     <section class="inner-block">
         <h4>Información detallada del Producto</h4>
         <v-card
-                        class="mx-auto my-4"
-                    >
-                    <template slot="progress">
-                    <v-progress-linear
-                        color="deep-purple"
-                        height="10"
-                        indeterminate
-                    ></v-progress-linear>
-                    </template>
+            v-if="Object.keys(itemDetalle).length !== 0"
+            class="mx-auto my-4"
+        >   <template slot="progress">
+                <v-progress-linear
+                    color="deep-purple"
+                    height="10"
+                    indeterminate
+                ></v-progress-linear>
+            </template>
 
-                    <v-img
-                        height="180"
-                        :src="itemDetalle.imagen"
-                    ></v-img>
+            <v-img
+                height="180"
+                :src="itemDetalle.imagen"
+            ></v-img>
 
-                    <v-card-title>{{itemDetalle.nombre}}</v-card-title>
+            <v-card-title>{{itemDetalle.nombre}}</v-card-title>
 
-                    <v-card-text>
-                        <div class="my-4 text-subtitle-1">
-                            Marca: {{itemDetalle.marca}}
-                        </div>
-                        <div class="my-4 text-subtitle-2">
-                            Detalle: {{itemDetalle.info}}
-                        </div>
-                    </v-card-text>
+            <v-card-text>
+                <div class="my-4 text-subtitle-1">
+                    Marca: {{itemDetalle.marca}}
+                </div>
+                <div class="my-4 text-subtitle-2">
+                    Detalle: {{itemDetalle.info}}
+                </div>
+            </v-card-text>
 
 
-                    <v-divider class="mx-4"></v-divider>
+            <v-divider class="mx-4"></v-divider>
 
-                    <v-card-text>
-                        <div class="my-4 text-subtitle-2">
-                            Precio actual:$ {{itemDetalle.precio}}
-                        </div>
-                        <v-text-field v-show="administrador==true"
-                            v-model="nuevoPrecio"
-                            label="Modificar Precio actual $"
-                            :rules="rules"
-                            > 
-                        </v-text-field>
-                    </v-card-text>
+            <v-card-text>
+                <div class="my-4 text-subtitle-2">
+                    Precio actual:$ {{itemDetalle.precio}}
+                </div>
+                <v-text-field v-show="administrador==true"
+                    v-model="nuevoPrecio"
+                    label="Modificar Precio actual $"
+                    :rules="rules"
+                    > 
+                </v-text-field>
+            </v-card-text>
 
-                    <v-card-actions class="botonera">
-                    <v-btn
-                        color="deep-purple lighten-2"
-                        text
-                        @click="regresar()"
-                    >
-                        Regresar
-                    </v-btn>
-                    <v-btn
-                        v-show="administrador==true"
-                        color="deep-purple lighten-2"
-                        text
-                        @click="actualizar()"
-                    >
-                        Actualizar
-                    </v-btn>
-                    </v-card-actions>
-                </v-card>
+            <v-card-actions class="botonera">
+            <v-btn
+                color="deep-purple lighten-2"
+                text
+                @click="regresar()"
+            >
+                Regresar
+            </v-btn>
+            <v-btn
+                v-show="administrador==true"
+                color="deep-purple lighten-2"
+                text
+                @click="actualizar()"
+            >
+                Actualizar
+            </v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-card
+            v-else
+            class="mx-auto my-4"
+        >
+            <v-card-text>
+                No seleccionaste ningun Producto
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    color="deep-purple lighten-2"
+                    text
+                    @click="regresar()"
+                >
+                    Regresar
+                </v-btn>
+            </v-card-actions>
+        </v-card>
     </section>
 </template>
 
 <script>
     import {updateProd} from '../firebase'
-    import {mapGetters, mapState} from 'vuex'
+    import {mapState} from 'vuex'
     export default ({
         name:'InfoProd',
         data(){
@@ -99,9 +116,6 @@
             ...mapState([
                 'itemDetalle',
                 'administrador'
-            ]),
-            ...mapGetters([
-                'getItemDetalle'
             ])
         }
     })
