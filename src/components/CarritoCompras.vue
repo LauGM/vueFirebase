@@ -41,27 +41,35 @@
                 
                     </v-card-text>
 
-                    <v-card-actions class="botonera">
+                    <div class="botonera">
                     <v-btn
-                        color="deep-purple lighten-2"
+                        color="alert"
                         text
                         @click="agregar(item)"
                     >
                         Comprar
                     </v-btn>
-                    <v-btn
-                            class="mx-2"
-                            fab
-                            dark
-                            x-small
-                            color="deep-purple"
-                            @click="redireccionar(item)"
-                            >
-                            <v-icon dark>
-                                mdi-plus
-                            </v-icon>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                    class="mx-2"
+                                    fab
+                                    dark
+                                    x-small
+                                    color="alert"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    @click="redireccionar(item)"
+                                >
+                                <v-icon dark>
+                                    mdi-plus
+                                </v-icon>
                             </v-btn>
-                    </v-card-actions>
+                        </template>
+                        <span>Ver más info del Producto</span>
+                    </v-tooltip>
+                    
+                    </div>
                 </v-card>
                 </v-col>
             </v-row>
@@ -70,9 +78,6 @@
 </template>
 
 <script>
-    //el siguiente json local en caso de superar las solicitudes diarias de mockaroo
-    //import stock from '../data/productos.json'
-    // import axios from 'axios'
     import{mapMutations} from 'vuex'
     import {getProducts} from '../firebase'
     export default ({

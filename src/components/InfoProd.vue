@@ -70,7 +70,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-btn
-                    color="deep-purple lighten-2"
+                    color="alert"
                     text
                     @click="regresar()"
                 >

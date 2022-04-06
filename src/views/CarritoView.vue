@@ -1,5 +1,6 @@
 <template>
-  <div class="products">
+<!-- para usar los v-tooltips pide que el div que contiene al componente que lo usa tenga el atributo data-app -->
+  <div data-app class="products">
       <carrito-compras />
   </div>
 </template>
