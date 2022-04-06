@@ -41,7 +41,7 @@
                 
                     </v-card-text>
 
-                    <div class="botonera">
+                    <v-card-actions class="botonera">
                     <v-btn
                         color="alert"
                         text
@@ -66,10 +66,10 @@
                                 </v-icon>
                             </v-btn>
                         </template>
-                        <span>Ver más info del Producto</span>
+                        <span>Ver más info de {{item.nombre}}</span>
                     </v-tooltip>
                     
-                    </div>
+                    </v-card-actions>
                 </v-card>
                 </v-col>
             </v-row>
