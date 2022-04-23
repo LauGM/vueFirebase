@@ -20,25 +20,33 @@
             </v-data-table>
             <p v-if="enCarro.length==0">No agregaste nada al carro aun</p>
             <article class="botonera">
-                <v-btn 
+                <v-btn v-if="usuarioActivo!='Anonimo' && calcularTotal!=0"
                     color='alert'
                     class='mr-4'
                     @click='comprar()'
-                >Comprar</v-btn>
-                <p>Total de la compra $ {{calcularTotal | filtroDecimal}}</p>
+                >Realizar pedido</v-btn>
+                <p v-else>Login y agregar productos para comprar</p>
                 <v-btn 
                     color='alert'
                     class='mr-4'
                     @click='regresar()'
                 >Regresar</v-btn>
             </article>
+            <p>Total de la compra $ {{calcularTotal | filtroDecimal}}</p>
         </v-container>
+        <CierreCompra :pedido="enCarro" :total="calcularTotal" v-if="formulario"/>
     </section>
 </template>
 
 <script>
+    import CierreCompra from "./CierreCompra.vue";
+    import {mapState} from 'vuex';
+
     export default ({
         name:'TablaProds',
+        components:{
+            CierreCompra
+        },
         data(){
             return{
                 enCarro:JSON.parse(sessionStorage.getItem("carro"))||[],
@@ -55,7 +63,8 @@
                     { text: 'Cantidad', value: 'cantidad' },
                     { text: 'Acción', value: 'accion',sortable:false}
                     ],
-                totalCompra:0
+                totalCompra:0,
+                formulario:false
             }
         },
         methods:{
@@ -70,6 +79,7 @@
                 sessionStorage.setItem('carro',JSON.stringify(this.enCarro));
             },
             comprar(){
+                this.formulario=true;
                 console.log("A formulario de compra")
             },
             regresar(){
@@ -77,6 +87,9 @@
             }
         },
         computed:{
+            ...mapState([
+                'usuarioActivo'
+            ]),
             calcularTotal(){
                 let total=0;
                 for (const prod of this.enCarro){
@@ -87,5 +100,3 @@
         }
     })
 </script>
-
-// no utilizo estilos aqui porque estoy usando bootstrap

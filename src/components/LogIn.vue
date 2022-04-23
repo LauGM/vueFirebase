@@ -97,6 +97,7 @@
         async created(){
             //solicito la lista de usuarios a firebase
             this.listaUsu=await getUsers();
+            console.log("👇Lista completa de usuarios en BD")
             console.log(this.listaUsu);
         },
         
@@ -110,8 +111,8 @@
                 this.$refs.observer.validate()
             },
             validar(){
-                console.log(this.listaUsu);
                 this.encontrado=this.listaUsu.find(usuario => usuario.email==this.usu && usuario.password==this.pass);
+                console.log("👇Usuario encontrado");
                 console.log(this.encontrado)
                 if(this.encontrado){
                     console.log("Usuario autenticado con exito");

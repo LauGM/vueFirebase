@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/products">Products</router-link> |
+      <router-link to="/">Login</router-link> |
+      <router-link to="/register">Registrate</router-link> |
+      <router-link to="/products">Productos</router-link> |
       <router-link to="/info">Info</router-link> |
-      <router-link to="/cart">Cart</router-link> 
+      <router-link to="/cart">Carro 🛒</router-link> 
     </nav>
     <div class="botonera">
       <p v-if="usuarioActivo != 'Anonimo'">Bienvenido/a {{usuarioActivo}}</p>

@@ -21,6 +21,7 @@ console.log(app)
 const db = getFirestore(app);
 // const auth = getAuth();
 const usuarios= collection(db,'users');
+const pedidos= collection(db,'pedidos');
 // const productos= collection(db,'products');
 const q=query(collection(db,'users'));
 const qProds=query(collection(db,'products'));
@@ -29,6 +30,7 @@ const qProds=query(collection(db,'products'));
 export async function getUsers(){
     const querySnapshot = await getDocs(q);
     const listaUsus=[];
+    console.log("👇Ids de usuarios en BD")
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
@@ -51,21 +53,33 @@ export async function postUser(usuario){
 }
 
 export async function updateProd(id,prod){
+    let exito=false;
     try {
         await updateDoc(doc(db,'products',id),prod);
-        alert("Actualización realizada");       
+        exito=true;      
     } catch (error) {
         console.log("Error "+error);
     }
+    return exito;
 }
 
 export async function getProducts(){
     const querySnapshot = await getDocs(qProds);
     const listaIds=[];
     const listaProds=[];
+    console.log("👇Productos en BD:")
     querySnapshot.forEach((doc) => {
         listaIds.push(doc.id);
         listaProds.push(doc.data());
     });
     return [listaIds,listaProds];
+}
+
+export async function postPedido(pedido){
+    try {
+        await setDoc(doc(pedidos), {pedido});
+        alert("Registro exitoso");
+    } catch (error) {
+        console.log("Error "+error);
+    }
 }

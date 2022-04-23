@@ -42,7 +42,7 @@
                     </v-card-text>
 
                     <v-card-actions class="botonera">
-                    <v-btn
+                    <v-btn v-if="!administrador"
                         color="alert"
                         text
                         @click="agregar(item)"
@@ -61,12 +61,16 @@
                                     v-on="on"
                                     @click="redireccionar(item)"
                                 >
-                                <v-icon dark>
+                                <v-icon dark v-if="!administrador">
                                     mdi-plus
+                                </v-icon>
+                                <v-icon dark v-else>
+                                    mdi-wrench
                                 </v-icon>
                             </v-btn>
                         </template>
-                        <span>Ver más info de {{item.nombre}}</span>
+                        <span v-if="!administrador">Ver más info de {{item.nombre}}</span>
+                        <span v-else>Modificar {{item.nombre}}</span>
                     </v-tooltip>
                     
                     </v-card-actions>
@@ -74,11 +78,18 @@
                 </v-col>
             </v-row>
         </v-container>
-    </section>
+        <article>
+            <v-btn 
+                color='alert'
+                class='mr-4'
+                @click='irAlCarro()'
+            >Ir al Carro  🛒</v-btn>
+        </article>
+</section>
 </template>
 
 <script>
-    import{mapMutations} from 'vuex'
+    import{mapState,mapMutations} from 'vuex'
     import {getProducts} from '../firebase'
     export default ({
         name:'CarritoCompras',
@@ -93,7 +104,7 @@
             //solicito el array de dos listas que devuelve getProducts:
             const listaIdData=await getProducts();
             //la lista de ids de firebase la guardo en el storage
-            sessionStorage.setItem('ids',JSON.stringify(listaIdData[0]));
+            sessionStorage.setItem('idsProds',JSON.stringify(listaIdData[0]));
             //la lista de productos la guardo en listaStock local a este componente
             this.listaStock=listaIdData[1];
             console.log(this.listaStock);
@@ -106,11 +117,15 @@
             ]),
             agregar(item){
                 const repetido=this.agregados.findIndex(elemento => elemento.id ==item.id);
-                console.log(repetido)
+                //en caso de existir ya en el carro devuelve -1
                 if(repetido!=-1){
                     this.agregados[repetido].cantidad++;
                 }else{
                     item.cantidad=1;
+                    //sacamos lo innecesario para la BD
+                    delete item['imagen'];
+                    delete item['info'];
+                    console.log(item);
                     this.agregados.push(item);
                 }
                 console.table(this.agregados);
@@ -121,7 +136,15 @@
                 sessionStorage.setItem('posicionProd',posicion);
                 this.actualizarItemDetalle(item);
                 this.$router.push('/info');
+            },
+            irAlCarro(){
+                this.$router.push("/cart");
             }
+        },
+        computed:{
+            ...mapState([
+                'administrador'
+            ])
         }
     })
 </script>

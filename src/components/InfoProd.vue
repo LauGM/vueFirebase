@@ -78,6 +78,12 @@
                 </v-btn>
             </v-card-actions>
         </v-card>
+        <v-alert v-if="actualizado"
+                color="primary"
+                dismissible
+                outlined
+                type="success"
+            >El producto fue actualizado con éxito</v-alert>
     </section>
 </template>
 
@@ -88,6 +94,7 @@
         name:'InfoProd',
         data(){
             return{
+                actualizado:false,
                 nuevoPrecio:0,
                 rules: [
                     value => !!value || 'Campo obligatorio.',
@@ -99,7 +106,7 @@
              regresar(){
                 this.$router.push('/products');
             },
-            actualizar(){
+            async actualizar(){
                 console.log(this.$store.state.itemDetalle)
                 const itemActualizado=this.$store.state.itemDetalle;
                 itemActualizado.precio=this.nuevoPrecio;
@@ -109,7 +116,7 @@
                 //traigo el array de ids de firestore
                 const idFireStore=JSON.parse(sessionStorage.getItem('ids'));
                 //envio el id en esa posicion como parametro 
-                updateProd(idFireStore[pos],itemActualizado);
+                this.actualizado= await updateProd(idFireStore[pos],itemActualizado);
             }
         },
         computed:{
@@ -120,5 +127,3 @@
         }
     })
 </script>
-
-// no utilizo estilos aqui porque estoy usando bootstrap
