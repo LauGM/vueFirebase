@@ -11,10 +11,10 @@
 <p>Firebase 9.6.10<p>
 
 ## Ejecutando las pruebas ⚙️
-<p>**Usuario no administrador**: user@prueba.com</p>
-<p>**Clave**: 111111</p>
-<p>**Usuario administrador**: lau@mac.com</p>
-<p>**Clave**: 111111</p>
+<p><strong>Usuario no administrador:</strong>user@prueba.com</p>
+<p><strong>Clave:</strong>111111</p>
+<p><strong>Usuario administrador:</strong>lau@mac.com</p>
+<p><strong>Clave:</strong>111111</p>
 
 ## Autora ✒️
 * **Laura González Martin**
