@@ -32,7 +32,13 @@
                     <span>{{errors[0]}}</span>
                 </validation-provider>
             </div>
-            <div>
+            <div class="botonera">
+                <v-btn
+                    color="alert"
+                    class="mr-4"
+                    @click="irARegistro()"
+                    >Registrate ahora
+                </v-btn>
                 <v-btn
                     :disabled="invalid"
                     color="alert"
@@ -42,9 +48,6 @@
                 </v-btn>
             </div>
             <span v-if="encontrado===undefined">Usuario o PassWord incorrecta</span>
-            <p class="forgot-password text-right">
-                No estás registrado ?
-            </p>
         </v-form>
         </validation-observer>
     </div>
@@ -122,6 +125,9 @@
                     this.$router.push('/products');
                 }
 
+            },
+            irARegistro(){
+                this.$router.push('/register');
             }
         },
         computed:{

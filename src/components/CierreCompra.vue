@@ -1,6 +1,12 @@
 <template>
   <div>
     <h4>Completa el formulario para la entrega de tu pedido (solo Bs. As.)</h4>
+    <v-alert
+            v-model="alert"
+            dark icon="mdi-star"
+        >
+        Pedido realizado, pronto recibirás un correo de confirmación
+    </v-alert>
     <validation-observer
         ref="observer"
         v-slot="{ invalid }"
@@ -115,7 +121,8 @@
       dire: '',
       cp:'',
       celular: '',
-      checkbox: null
+      checkbox: null,
+      alert:false
     }),
     props:{
       pedido:Array,
@@ -147,7 +154,22 @@
           };
           console.log(nuevoPedido);
         //guardar en firebase el pedido
-        postPedido(nuevoPedido);
+        try{
+          postPedido(nuevoPedido);
+          this.alert=true;
+          localStorage.removeItem('carro');
+          this.ocultar_alert();
+        }catch{
+          console.log("Error en carga de pedido");
+        }
+        
+      },
+      ocultar_alert() {
+          window.setTimeout(() => {
+              this.alert = false;
+              console.log("se oculta el alert luego de 5 segundos y redirecciona a Productos");
+              this.$router.push('/products'); 
+          }, 5000)   
       }
     },
   }

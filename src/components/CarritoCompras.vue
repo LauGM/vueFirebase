@@ -1,23 +1,21 @@
 <template>
     <section class="inner-block-grande">
         <h4>Listado de Productos en stock</h4>
-        <v-container>
+        <v-alert
+            v-model="alert"
+            dark icon="mdi-star"
+        >
+        Lo agregaste al Carro
+        </v-alert>
+<v-container>
             <v-row>
                 <v-col v-for="item of listaStock" :key="item.id"
                     cols="6"
                     md="4"
                 >
                     <v-card
-                        :loading="loading"
                         class="mx-auto my-4"
                     >
-                    <template slot="progress">
-                    <v-progress-linear
-                        color="deep-purple"
-                        height="10"
-                        indeterminate
-                    ></v-progress-linear>
-                    </template>
 
                     <v-img
                         height="180"
@@ -36,10 +34,6 @@
                     </v-card-text>
 
                     <v-divider class="mx-4"></v-divider>
-
-                    <v-card-text>
-                
-                    </v-card-text>
 
                     <v-card-actions class="botonera">
                     <v-btn v-if="!administrador"
@@ -62,7 +56,7 @@
                                     @click="redireccionar(item)"
                                 >
                                 <v-icon dark v-if="!administrador">
-                                    mdi-plus
+                                    mdi-information-variant
                                 </v-icon>
                                 <v-icon dark v-else>
                                     mdi-wrench
@@ -78,13 +72,13 @@
                 </v-col>
             </v-row>
         </v-container>
-        <article>
+        <v-container>
             <v-btn 
                 color='alert'
                 class='mr-4'
                 @click='irAlCarro()'
             >Ir al Carro  🛒</v-btn>
-        </article>
+        </v-container>
 </section>
 </template>
 
@@ -95,9 +89,9 @@
         name:'CarritoCompras',
         data(){
             return{
-                agregados:JSON.parse(sessionStorage.getItem("carro"))||[],
+                agregados:JSON.parse(localStorage.getItem("carro"))||[],
                 listaStock:[],
-                loading:false
+                alert:false
             }
         },
         async created(){
@@ -121,15 +115,20 @@
                 if(repetido!=-1){
                     this.agregados[repetido].cantidad++;
                 }else{
-                    item.cantidad=1;
-                    //sacamos lo innecesario para la BD
-                    delete item['imagen'];
-                    delete item['info'];
-                    console.log(item);
-                    this.agregados.push(item);
+                    const prodAAgregar={
+                        id: item.id,
+                        cantidad: 1,
+                        marca: item.marca,
+                        nombre: item.nombre,
+                        precio:item.precio
+                    }
+                    console.log(prodAAgregar);
+                    this.agregados.push(prodAAgregar);
                 }
                 console.table(this.agregados);
-                sessionStorage.setItem("carro",JSON.stringify(this.agregados));
+                localStorage.setItem("carro",JSON.stringify(this.agregados));
+                this.alert=true;
+                this.hide_alert();
             },
             redireccionar(item){
                 const posicion=this.listaStock.findIndex(producto =>producto.id==item.id);
@@ -139,6 +138,14 @@
             },
             irAlCarro(){
                 this.$router.push("/cart");
+            },
+            hide_alert() {
+                console.log('Hide')
+                // `event` is the native DOM event
+                window.setTimeout(() => {
+                    this.alert = false;
+                    console.log("hide alert after 3 seconds");
+                }, 2000)    
             }
         },
         computed:{

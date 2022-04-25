@@ -83,7 +83,14 @@
                     label="es administrador?"
                 ></v-checkbox>
             </div>
-            <div>
+            <div class="botonera">
+                <v-btn
+                    color="alert"
+                    class="mr-4"
+                    @click="irALogin()"
+                    >Ir al Login
+                </v-btn>
+                
                 <v-btn
                     type="submit"
                     :disabled="invalid"
@@ -93,9 +100,6 @@
                     >Registrarse
                 </v-btn>
             </div>
-            <p class="forgot-password text-right">
-                Ya estas registrado ?
-            </p>
         </v-form>
         </validation-observer>
     </div>
@@ -164,7 +168,11 @@
                     admin:this.admin
                 }
                 console.log(nuevoUsu);
-                postUser(nuevoUsu)
+                postUser(nuevoUsu);
+                this.irALogin();
+            },
+            irALogin(){
+                this.$router.push('/');
             }
         },
         computed:{

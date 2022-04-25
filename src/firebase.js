@@ -78,7 +78,6 @@ export async function getProducts(){
 export async function postPedido(pedido){
     try {
         await setDoc(doc(pedidos), {pedido});
-        alert("Registro exitoso");
     } catch (error) {
         console.log("Error "+error);
     }
