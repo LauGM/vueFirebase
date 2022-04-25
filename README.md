@@ -1,19 +1,19 @@
 # firebase-vue
-_Es el proyecto final del curso de Vue realizado en CoderHouse
-_Consta de un ecommerce de productos de tecnología
+<p>Es el proyecto final del curso de Vue realizado en CoderHouse</p>
+<p>Consta de un ecommerce de productos de tecnología</p>
 
 ## Tecnologías utilizadas 🚀
-_Vue Cli 2.6.14
-_Vuetify 2.6.0
-_Vue router 3.5.1
-_Vuex 3.6.2
-_VeeValidate 3.4.14
-_Firebase 9.6.10
+<p>Vue Cli 2.6.14</p>
+<p>Vuetify 2.6.0</p>
+<p>Vue router 3.5.1</p>
+<p>Vuex 3.6.2</p>
+<p>VeeValidate 3.4.14</p>
+<p>Firebase 9.6.10<p>
 
 ## Ejecutando las pruebas ⚙️
 
-_Usuario no administrador: user@prueba.com   Clave: 111111_
-_Usuario administrador: lau@mac.com   Clave: 111111_
+<p>Usuario no administrador: user@prueba.com   Clave: 111111</p>
+<p>Usuario administrador: lau@mac.com   Clave: 111111</p>
 
 ## Autora ✒️
 * **Laura González Martin**
