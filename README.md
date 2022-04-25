@@ -1,4 +1,4 @@
-# firebase-vue ecommerce ABM
+# firebase-vue ecommerce ABM 🌟
 <p>Es el proyecto final del curso de Vue realizado para CoderHouse en Abril 2022</p>
 <p>Consta de un ecommerce de productos de tecnología</p>
 
@@ -11,11 +11,10 @@
 <p>Firebase 9.6.10<p>
 
 ## Ejecutando las pruebas ⚙️
-
-<p>Usuario no administrador: user@prueba.com</p>
-<p>Clave: 111111</p>
-<p>Usuario administrador: lau@mac.com</p>
-<p>Clave: 111111</p>
+<p>**Usuario no administrador**: user@prueba.com</p>
+<p>**Clave**: 111111</p>
+<p>**Usuario administrador**: lau@mac.com</p>
+<p>**Clave**: 111111</p>
 
 ## Autora ✒️
 * **Laura González Martin**
