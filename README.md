@@ -1,5 +1,5 @@
-# firebase-vue
-<p>Es el proyecto final del curso de Vue realizado en CoderHouse</p>
+# firebase-vue ecommerce ABM
+<p>Es el proyecto final del curso de Vue realizado para CoderHouse en Abril 2022</p>
 <p>Consta de un ecommerce de productos de tecnología</p>
 
 ## Tecnologías utilizadas 🚀
@@ -12,8 +12,10 @@
 
 ## Ejecutando las pruebas ⚙️
 
-<p>Usuario no administrador: user@prueba.com   Clave: 111111</p>
-<p>Usuario administrador: lau@mac.com   Clave: 111111</p>
+<p>Usuario no administrador: user@prueba.com</p>
+<p>Clave: 111111</p>
+<p>Usuario administrador: lau@mac.com</p>
+<p>Clave: 111111</p>
 
 ## Autora ✒️
 * **Laura González Martin**
