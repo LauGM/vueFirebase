@@ -11,10 +11,16 @@
 <p>Firebase 9.6.10<p>
 
 ## Ejecutando las pruebas ⚙️
+
+### El usuario no administrador 🧑
 <p><strong>Usuario no administrador:</strong>user@prueba.com</p>
 <p><strong>Clave:</strong>111111</p>
+<p>El usuario no administrador puede registrarse con datos propios, loguearse con usuario nuevo o con el de prueba, ver información y/o agregar productos al carro de compras, eliminarlos del carro, cambiar cantidades de los mismos, completar formulario para la entrega a domicilio en Buenos Aires, y realizar pedido</p>
+
+### El usuario administrador 🧑🏻
 <p><strong>Usuario administrador:</strong>lau@mac.com</p>
 <p><strong>Clave:</strong>111111</p>
+<p>El usuario administrador puede registrarse con datos propios, loguearse con usuario nuevo o con el de prueba, ver información de productos y modificarlos, eliminarlos de la BD, dar altas de productos nuevos, ver pedidos realizados, y darlos de baja una vez realizadala entrega</p>
 
 ## Autora ✒️
 * **Laura González Martin**
