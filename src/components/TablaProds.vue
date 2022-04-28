@@ -1,5 +1,4 @@
-<template>
-    
+<template> 
     <section class="inner-block-grande">
         <div data-app class="text-center">
         <v-container>
@@ -146,7 +145,6 @@
             return{
                 enCarro:JSON.parse(localStorage.getItem("carro"))||[],
                 headers: [
-                    { text: 'Id', value: 'id' },
                     {
                         text: 'Nombre',
                         align: 'start',
@@ -159,7 +157,6 @@
                     { text: 'Acción', value: 'accion',sortable:false}
                 ],
                 defaultItem:{
-                    id: '',
                     cantidad: 0,
                     marca: '',
                     nombre: '',
@@ -167,7 +164,6 @@
                 },
                 editedIndex: -1,
                 editedItem: {
-                    id: '',
                     cantidad: 0,
                     marca: '',
                     nombre: '',

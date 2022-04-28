@@ -12,33 +12,67 @@
                 ></v-progress-linear>
             </template>
 
-            <v-img
+            <v-img v-if="!administrador"
                 height="180"
                 :src="itemDetalle.imagen"
             ></v-img>
+            <v-card-text v-else>
+                <v-text-field
+                    v-model="nuevaImagen"
+                    label="Modificar imagen actual"
+                    :rules="rulesDetalle"
+                    > 
+                </v-text-field>
+            </v-card-text>
 
-            <v-card-title>{{itemDetalle.nombre}}</v-card-title>
+            <v-card-title v-if="!administrador">{{itemDetalle.nombre}}</v-card-title>
+            <v-card-title v-else>
+                <v-text-field
+                    v-model="nuevoNombre"
+                    label="Modificar Marca actual"
+                    :rules="rulesDetalle"
+                    > 
+                </v-text-field>
+            </v-card-title>
 
             <v-card-text>
-                <div class="my-4 text-subtitle-1">
-                    Marca: {{itemDetalle.marca}}
+                <div v-if="administrador==false" class="my-4 text-subtitle-1">
+                    <strong>Marca:</strong> {{itemDetalle.marca}}
                 </div>
-                <div class="my-4 text-subtitle-2">
-                    Detalle: {{itemDetalle.info}}
+                <v-text-field v-else
+                    v-model="nuevaMarca"
+                    label="Modificar Marca actual"
+                    :rules="rulesDetalle"
+                    > 
+                </v-text-field>
+            </v-card-text>
+
+             <v-divider class="mx-4"></v-divider>
+
+            <v-card-text>
+                <div v-if="administrador==false" class="my-4 text-subtitle-2">
+                    <strong>Detalle:</strong> {{itemDetalle.info}}
                 </div>
+
+                <v-textarea v-else
+                    v-model="nuevoDetalle"
+                    label="Modificar Detalle del Producto"
+                    :rules="rulesDetalle"
+                    > 
+                </v-textarea>
             </v-card-text>
 
 
             <v-divider class="mx-4"></v-divider>
 
             <v-card-text>
-                <div class="my-4 text-subtitle-2">
-                    Precio actual:$ {{itemDetalle.precio}}
+                <div v-if="administrador==false" class="my-4 text-subtitle-2">
+                    <strong>Precio actual:$</strong> {{itemDetalle.precio}}
                 </div>
-                <v-text-field v-show="administrador==true"
+                <v-text-field v-else
                     v-model="nuevoPrecio"
                     label="Modificar Precio actual $"
-                    :rules="rules"
+                    :rules="rulesPrecio"
                     > 
                 </v-text-field>
             </v-card-text>
@@ -95,10 +129,17 @@
         data(){
             return{
                 actualizado:false,
-                nuevoPrecio:0,
-                rules: [
+                nuevoNombre:this.$store.state.itemDetalle.nombre,
+                nuevaMarca:this.$store.state.itemDetalle.marca,
+                nuevoPrecio:this.$store.state.itemDetalle.precio,
+                nuevoDetalle:this.$store.state.itemDetalle.info,
+                nuevaImagen:this.$store.state.itemDetalle.imagen,
+                rulesPrecio: [
                     value => !!value || 'Campo obligatorio.',
                     value => (!isNaN(value)) || 'Debe ser un numero',
+                ],
+                rulesDetalle: [
+                    value => !!value || 'Campo obligatorio.'
                 ]
             }
         },
@@ -108,13 +149,19 @@
             },
             async actualizar(){
                 console.log(this.$store.state.itemDetalle)
-                const itemActualizado=this.$store.state.itemDetalle;
-                itemActualizado.precio=this.nuevoPrecio;
+                const itemActualizado={
+                    nombre:this.nuevoNombre,
+                    marca:this.nuevaMarca,
+                    info:this.nuevoDetalle,
+                    precio:this.nuevoPrecio,
+                    imagen:this.nuevaImagen
+                }
+                console.log(itemActualizado);
                 // actualizarItemDetalle(itemActualizado)
                 //busco la posicion el elemento que estoy visualizando en pantalla
                 const pos=parseInt(sessionStorage.getItem('posicionProd'));
                 //traigo el array de ids de firestore
-                const idFireStore=JSON.parse(sessionStorage.getItem('ids'));
+                const idFireStore=JSON.parse(sessionStorage.getItem('idsProds'));
                 //envio el id en esa posicion como parametro 
                 this.actualizado= await updateProd(idFireStore[pos],itemActualizado);
             }

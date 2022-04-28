@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore,collection, query,getDocs,setDoc,doc, updateDoc} from 'firebase/firestore';
+import { getFirestore,collection, query,getDocs,setDoc,doc, updateDoc, deleteDoc} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,8 +22,9 @@ const db = getFirestore(app);
 // const auth = getAuth();
 const usuarios= collection(db,'users');
 const pedidos= collection(db,'pedidos');
-// const productos= collection(db,'products');
+const productos=collection(db,'products');
 const q=query(collection(db,'users'));
+const qPedidos=query(collection(db,'pedidos'));
 const qProds=query(collection(db,'products'));
 
 
@@ -63,6 +64,37 @@ export async function updateProd(id,prod){
     return exito;
 }
 
+export async function deleteProd(id){
+    let exito=false;
+    try {
+        await deleteDoc(doc(db,'products',id));
+        exito=true;      
+    } catch (error) {
+        console.log("Error "+error);
+    }
+    return exito;
+}
+
+//paso propiedad a propiedad para que firebase no cree el objeto product como tal
+export async function postProd(product){
+    let exito=false;
+    try {
+        await setDoc(doc(productos), 
+        {
+            imagen:product.imagen,
+            info:product.info,
+            marca:product.marca,
+            nombre:product.nombre,
+            precio:product.precio
+        }
+        );
+        exito=true;
+    } catch (error) {
+        console.log("Error "+error);
+    }
+    return exito;
+}
+
 export async function getProducts(){
     const querySnapshot = await getDocs(qProds);
     const listaIds=[];
@@ -81,4 +113,28 @@ export async function postPedido(pedido){
     } catch (error) {
         console.log("Error "+error);
     }
+}
+
+export async function getPedidos(){
+    const querySnapshot = await getDocs(qPedidos);
+    const listaIdsPedidos=[]
+    const listaPedidos=[];
+    console.log("👇Pedidos en BD");
+    querySnapshot.forEach((doc) => {
+        listaIdsPedidos.push(doc.id);
+        listaPedidos.push(doc.data().pedido);
+    });
+    console.log(listaPedidos)
+    return [listaIdsPedidos,listaPedidos];
+}
+
+export async function deletePedido(id){
+    let exito=false;
+    try {
+        await deleteDoc(doc(db,'pedidos',id));
+        exito=true;      
+    } catch (error) {
+        console.log("Error "+error);
+    }
+    return exito;
 }

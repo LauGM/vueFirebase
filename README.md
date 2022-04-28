@@ -19,7 +19,7 @@
 
 ### El usuario administrador 🧑🏻
 <p><strong>Usuario administrador:</strong>lau@mac.com</p>
-<p><strong>Clave:</strong>111111</p>
+<p><strong>Clave:</strong>123456</p>
 <p>El usuario administrador puede registrarse con datos propios, loguearse con usuario nuevo o con el de prueba, ver información de productos y modificarlos, eliminarlos de la BD, dar altas de productos nuevos, ver pedidos realizados, y darlos de baja una vez realizadala entrega</p>
 
 ## Autora ✒️
