@@ -103,6 +103,13 @@
         </v-form>
         </validation-observer>
     </div>
+        <v-alert v-if="respuestaPost"
+                color="primary"
+                dismissible
+                outlined
+                type="success"
+        >El usuario fue registrado con éxito
+        </v-alert>
     </div>
 </template>
 
@@ -147,7 +154,8 @@
                 email:'',
                 clave1:'',
                 clave2:'',
-                admin:false
+                admin:false,
+                respuestaPost:false
             }
         },
         components:{
@@ -158,7 +166,7 @@
             submit () {
                 this.$refs.observer.validate()
             },
-            validar(){
+            async validar(){
                 const nuevoUsu={
                     id:1,
                     email:this.email,
@@ -168,8 +176,15 @@
                     admin:this.admin
                 }
                 console.log(nuevoUsu);
-                postUser(nuevoUsu);
-                this.irALogin();
+                this.respuestaPost=await postUser(nuevoUsu);
+                this.hide_alert();
+            },
+            hide_alert() {
+                window.setTimeout(() => {
+                    this.respuestaPost=false;
+                    console.log("oculto alert despues de 3 segundos");
+                    this.irALogin();
+                }, 3000)    
             },
             irALogin(){
                 this.$router.push('/');

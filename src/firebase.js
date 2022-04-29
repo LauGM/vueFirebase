@@ -45,12 +45,14 @@ export async function getUsers(){
 }
 
 export async function postUser(usuario){
+    let exito=false;
     try {
         await setDoc(doc(usuarios), {usuario});
-        alert("Registro exitoso");
+        exito=true;
     } catch (error) {
         console.log("Error "+error);
     }
+    return exito;
 }
 
 export async function updateProd(id,prod){
